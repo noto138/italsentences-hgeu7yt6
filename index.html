@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Italian Sentence Practice</title>
+    <link
+      rel="manifest"
+      href="data:application/json;base64,eyJuYW1lIjoiSXRhbGlhbiBTZW50ZW5jZSBQcmFjdGljZSIsInNob3J0X25hbWUiOiJJdGFsaWFuU2VudGVuY2VzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMyZTdkMzIiLCJ0aGVtZV9jb2xvciI6IiMyZTdkMzIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l4TWpBaUlHaGxhV2RvZEQwaU1USXdJajQ4WTJseVkyeGxJR040UFNJMk1DSWdZM2s5SWpZd0lpQnlQU0kwTUNJZ1ptbHNiRDBpSXpKbE56UXpNaUl2UGp4MFpYaDBJSGcyUFNJMk1DSWdlVEk5SXpRaUlITjBlV3hsUFNKbWFXeHNPaU4zYUdsMFpWdG1iMjUwTFhOcGVtVTZNVEZ3ZUNJZ2RHVjRkQzFoYm1Ob2IzSTlTVVJCSWoxa1NVUkJQQzlqYVhKamJHVStQQzl6ZG1jKyIsInNpemVzIjoiMTIweDEyMCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="
+    />
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1.1em;
+      }
+
+      .card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .practice-section {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .sentence-display {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border: 2px dashed #dee2e6;
+      }
+
+      .selected-sentences {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .sentence-card {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 12px;
+        text-align: left;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        transition: all 0.3s ease;
+      }
+
+      .sentence-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .sentence-card.custom {
+        background: linear-gradient(45deg, #b39ddb, #9575cd);
+        border-left: 4px solid #7e57c2;
+      }
+
+      .sentence-main {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+
+      .sentence-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 8px;
+      }
+
+      .sentence-translation,
+      .sentence-infinitive,
+      .sentence-conjugation {
+        font-size: 0.9em;
+        font-style: italic;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        display: none;
+      }
+
+      .sentence-translation {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .sentence-tense-label {
+        font-size: 0.8em;
+        background: rgba(255, 255, 255, 0.3);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+
+      .sentence-icons {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+      }
+
+      .speaker-icon,
+      .copy-icon,
+      .dict-icon {
+        cursor: pointer;
+        font-size: 1.1em;
+        opacity: 1;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+        transition: all 0.2s;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        padding: 3px 5px;
+      }
+
+      .speaker-icon:hover,
+      .copy-icon:hover,
+      .dict-icon:hover {
+        transform: scale(1.2);
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9));
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .custom-indicator {
+        color: #fff3e0;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .empty-state {
+        color: #6c757d;
+        font-style: italic;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+      }
+
+      .btn-secondary:hover {
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+      }
+
+      .btn-large {
+        flex: 2;
+        min-width: 160px;
+      }
+
+      .btn-small {
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .hint-controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .hint-controls .btn {
+        flex: 1;
+        min-width: 140px;
+      }
+
+      .tense-selection {
+        margin-bottom: 20px;
+      }
+
+      .tense-selection label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-weight: 500;
+        font-size: 1.1em;
+      }
+
+      .tense-selection input[type="checkbox"] {
+        transform: scale(1.2);
+      }
+
+      .sentence-selection {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .sentence-selection label {
+        font-weight: 600;
+        margin-right: 10px;
+        color: #495057;
+      }
+
+      .sentence-selection input[type="number"] {
+        width: 60px;
+        padding: 8px;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        font-size: 1em;
+      }
+
+      .custom-sentences-selector {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+      }
+
+      .custom-sentences-selector label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95em;
+        margin-bottom: 8px;
+      }
+
+      .custom-count-display {
+        text-align: center;
+        font-size: 0.85em;
+        color: #6c757d;
+        margin-top: 8px;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .tab {
+        background: none;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        font-size: 1em;
+        color: #6c757d;
+        transition: all 0.3s ease;
+      }
+
+      .tab.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+        font-weight: 600;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .manage-section {
+        margin-bottom: 30px;
+      }
+
+      .tense-group {
+        margin-bottom: 30px;
+      }
+
+      .tense-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 12px 0;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .tense-title {
+        font-weight: 600;
+        color: #495057;
+        font-size: 1.2em;
+      }
+
+      .sentence-count {
+        background: #e9ecef;
+        padding: 6px 12px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        color: #6c757d;
+      }
+
+      .sentence-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .sentence-item {
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        position: relative;
+      }
+
+      .sentence-item.custom {
+        background: #e3f2fd;
+        border: 2px solid #1976d2;
+        color: #1565c0;
+        font-weight: 600;
+      }
+
+      .sentence-item:hover {
+        background: #e9ecef;
+      }
+
+      .sentence-item.custom:hover {
+        background: #bbdefb;
+      }
+
+      .sentence-item-main {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .sentence-item-details {
+        font-size: 0.85em;
+        color: #6c757d;
+      }
+
+      .remove-sentence {
+        color: #dc3545;
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      .add-sentence-form {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+
+      .form-input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        font-size: 0.9em;
+        min-width: 200px;
+      }
+
+      .form-input.full-width {
+        width: 100%;
+        flex: none;
+      }
+
+      .add-sentence-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+      }
+
+      .add-sentence-btn:hover {
+        background: #218838;
+      }
+
+      .import-section {
+        margin-bottom: 30px;
+      }
+
+      .import-section h3 {
+        margin-bottom: 10px;
+        color: #495057;
+      }
+
+      .import-section p {
+        color: #6c757d;
+        margin-bottom: 15px;
+      }
+
+      .import-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .import-controls .btn {
+        margin: 5px;
+      }
+
+      .import-status {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .import-status.success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        display: block;
+      }
+
+      .import-status.error {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        display: block;
+      }
+
+      .info-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        line-height: 1.6;
+      }
+
+      .info-section h3 {
+        color: #495057;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .info-section h4 {
+        color: #495057;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .info-section ul {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+
+      .info-section li {
+        margin-bottom: 5px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 15px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .controls,
+        .hint-controls {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .form-row {
+          flex-direction: column;
+        }
+
+        .form-input {
+          min-width: unset;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🇮🇹 Italian Sentences</h1>
+        <p>Practice with conjugated sentences</p>
+      </div>
+
+      <div class="card">
+        <div class="tabs">
+          <button class="tab active" data-tab="practice">Practice</button>
+          <button class="tab" data-tab="manage">Manage Sentences</button>
+          <button class="tab" data-tab="info">Info</button>
+        </div>
+
+        <div class="tab-content active" id="practice">
+          <div class="practice-section">
+            <div class="tense-selection">
+              <label>
+                <input type="checkbox" id="includeFuture" checked />
+                Futuro Semplice (<span id="futureCount">0</span> sentences)
+              </label>
+              <label>
+                <input type="checkbox" id="includeConditional" />
+                Condizionale (<span id="conditionalCount">0</span> sentences)
+              </label>
+              <label>
+                <input type="checkbox" id="includeImperfetto" />
+                Imperfetto (<span id="imperfettoCount">0</span> sentences)
+              </label>
+            </div>
+
+            <div class="sentence-selection">
+              <label>Number of sentences:</label>
+              <input
+                type="number"
+                id="sentenceNumber"
+                value="3"
+                min="1"
+                max="10"
+              />
+            </div>
+
+            <div class="custom-sentences-selector">
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  justify-content: center;
+                  align-items: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <label>
+                  <input
+                    type="radio"
+                    name="customSentencesOption"
+                    value="exclude"
+                    onchange="updateCustomSentencesOption()"
+                  />
+                  Exclude Custom
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="customSentencesOption"
+                    value="include"
+                    checked
+                    onchange="updateCustomSentencesOption()"
+                  />
+                  Include Custom
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="customSentencesOption"
+                    value="only"
+                    onchange="updateCustomSentencesOption()"
+                  />
+                  Custom Only
+                </label>
+              </div>
+              <div class="custom-count-display">
+                <span id="customSentencesCount">0 custom sentences total</span>
+              </div>
+            </div>
+
+            <div class="sentence-display">
+              <div class="selected-sentences" id="selectedSentences">
+                <div class="empty-state">
+                  Click "Get New Sentences" to start practicing!
+                </div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button class="btn btn-large" onclick="getRandomSentences()">
+                Get New Sentences
+              </button>
+              <button
+                class="btn btn-secondary btn-small"
+                onclick="clearSentences()"
+              >
+                Clear
+              </button>
+            </div>
+
+            <div class="hint-controls">
+              <button
+                class="btn btn-secondary"
+                id="translationHintBtn"
+                onclick="showTranslationHints()"
+                style="display: none"
+              >
+                Show English Translations
+              </button>
+              <button
+                class="btn btn-secondary"
+                id="infinitiveHintBtn"
+                onclick="showInfinitiveHints()"
+                style="display: none"
+              >
+                Show Infinitives
+              </button>
+              <button
+                class="btn btn-secondary"
+                id="conjugationHintBtn"
+                onclick="showConjugationHints()"
+                style="display: none"
+              >
+                Show Conjugations
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="manage">
+          <div class="import-section">
+            <div class="import-controls">
+              <h3>Import Sentence Lists</h3>
+              <p>Load JSON files with sentences organized by tense</p>
+              <input
+                type="file"
+                id="jsonFileInput"
+                accept=".json"
+                style="display: none"
+                onchange="loadJSONFile(event)"
+              />
+              <input
+                type="file"
+                id="customSentencesInput"
+                accept=".json"
+                style="display: none"
+                onchange="loadCustomSentencesFile(event)"
+              />
+              <button
+                class="btn"
+                onclick="document.getElementById('jsonFileInput').click()"
+              >
+                Load JSON File
+              </button>
+              <button class="btn btn-secondary" onclick="downloadSampleJSON()">
+                Download Sample JSON
+              </button>
+              <br />
+              <button
+                class="btn"
+                onclick="downloadCustomSentences()"
+                style="background: #28a745"
+              >
+                Backup My Custom Sentences
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="document.getElementById('customSentencesInput').click()"
+              >
+                Restore Custom Sentences
+              </button>
+            </div>
+            <div class="import-status" id="importStatus"></div>
+          </div>
+
+          <div class="manage-section">
+            <div style="text-align: center; margin-bottom: 20px">
+              <h3>Add Custom Sentences</h3>
+              <p style="color: #6c757d">
+                Add your own sentences for extra practice. All fields are
+                optional.
+              </p>
+            </div>
+
+            <div class="tense-group">
+              <div class="tense-header">
+                <span class="tense-title">Futuro Semplice</span>
+                <span class="sentence-count" id="futureCountManage"
+                  >0 custom sentences</span
+                >
+              </div>
+              <div class="sentence-list" id="futureList"></div>
+              <div class="add-sentence-form">
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input full-width"
+                    id="newFutureItalian"
+                    placeholder="Italian sentence (e.g., Domani andrò al supermercato)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newFutureEnglish"
+                    placeholder="English translation (optional)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newFutureInfinitive"
+                    placeholder="Infinitive (e.g., andare)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newFutureConjugation"
+                    placeholder="Conjugation (e.g., io andrò)"
+                  />
+                </div>
+                <button
+                  class="add-sentence-btn"
+                  onclick="addCustomSentence('future')"
+                >
+                  Add Future Sentence
+                </button>
+              </div>
+            </div>
+
+            <div class="tense-group">
+              <div class="tense-header">
+                <span class="tense-title">Condizionale</span>
+                <span class="sentence-count" id="conditionalCountManage"
+                  >0 custom sentences</span
+                >
+              </div>
+              <div class="sentence-list" id="conditionalList"></div>
+              <div class="add-sentence-form">
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input full-width"
+                    id="newConditionalItalian"
+                    placeholder="Italian sentence (e.g., Vorrei un caffè, per favore)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newConditionalEnglish"
+                    placeholder="English translation (optional)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newConditionalInfinitive"
+                    placeholder="Infinitive (e.g., volere)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newConditionalConjugation"
+                    placeholder="Conjugation (e.g., io vorrei)"
+                  />
+                </div>
+                <button
+                  class="add-sentence-btn"
+                  onclick="addCustomSentence('conditional')"
+                >
+                  Add Conditional Sentence
+                </button>
+              </div>
+            </div>
+
+            <div class="tense-group">
+              <div class="tense-header">
+                <span class="tense-title">Imperfetto</span>
+                <span class="sentence-count" id="imperfettoCountManage"
+                  >0 custom sentences</span
+                >
+              </div>
+              <div class="sentence-list" id="imperfettoList"></div>
+              <div class="add-sentence-form">
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input full-width"
+                    id="newImperfettoItalian"
+                    placeholder="Italian sentence (e.g., Quando ero giovane, giocavo a calcio)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newImperfettoEnglish"
+                    placeholder="English translation (optional)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newImperfettoInfinitive"
+                    placeholder="Infinitive (e.g., giocare)"
+                  />
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="newImperfettoConjugation"
+                    placeholder="Conjugation (e.g., io giocavo)"
+                  />
+                </div>
+                <button
+                  class="add-sentence-btn"
+                  onclick="addCustomSentence('imperfetto')"
+                >
+                  Add Imperfetto Sentence
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="info">
+          <div class="info-section">
+            <h3>Italian Sentence Practice - Instructions</h3>
+
+            <h4>How to Use:</h4>
+            <p>
+              <strong>Practice Tab:</strong> Select which tenses you want to
+              practice (you can choose multiple), set the number of sentences,
+              and choose whether to include your custom sentences. Click "Get
+              New Sentences" to display random sentences from your selected
+              tenses.
+            </p>
+
+            <p>
+              <strong>Progressive Hints:</strong> Use the hint buttons to
+              gradually reveal more information: first the English translations,
+              then infinitive forms, and finally the conjugated forms. This
+              helps you test your understanding step by step.
+            </p>
+
+            <p>
+              <strong>Manage Tab:</strong> Add your own custom sentences for any
+              tense. You can include any combination of Italian text, English
+              translation, infinitive form, and conjugation - all fields are
+              optional.
+            </p>
+
+            <h4>Features:</h4>
+            <ul>
+              <li>🔊 Click the speaker icon to hear Italian pronunciation</li>
+              <li>
+                📋 Click the clipboard icon to copy sentences to your clipboard
+              </li>
+              <li>
+                📖 Click the book icon to look up words in an Italian dictionary
+              </li>
+              <li>
+                👁️ Progressive hint system: translations → infinitives →
+                conjugations
+              </li>
+              <li>⭐ Add custom sentences that mix with built-in content</li>
+              <li>📊 Practice multiple tenses simultaneously</li>
+              <li>💾 Backup and restore your custom sentences</li>
+            </ul>
+
+            <h4>Tense Information:</h4>
+            <ul>
+              <li>
+                <strong>Futuro Semplice:</strong> Future tense with time
+                indicators like "domani", "la settimana prossima"
+              </li>
+              <li>
+                <strong>Condizionale:</strong> Conditional tense for polite
+                requests, hypotheticals, and reported speech
+              </li>
+              <li>
+                <strong>Imperfetto:</strong> Imperfect tense for ongoing past
+                actions, habits, and descriptions
+              </li>
+            </ul>
+
+            <h4>Tips:</h4>
+            <p>
+              Start with one tense at a time to focus your practice. Use the
+              hint buttons strategically - try to understand the Italian first,
+              then check the English, and finally study the grammatical forms.
+              The built-in sentences include contextual clues to help you
+              understand when each tense is used.
+            </p>
+
+            <p style="margin-top: 20px; font-style: italic; color: #6c757d">
+              Continua a praticare! (Keep practicing!)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize sentence lists with data from your CSVs
+      const sentenceLists = {
+        future: [
+          {
+            italian: "Domani riparerò la macchina",
+            english: "Tomorrow I will fix the car",
+            infinitive: "riparare",
+            conjugation: "io riparerò",
+          },
+          {
+            italian: "Pulirò l'appartamento dopo cena",
+            english: "I will clean the apartment after dinner",
+            infinitive: "pulire",
+            conjugation: "io pulirò",
+          },
+          {
+            italian: "La settimana prossima visiterò i miei genitori",
+            english: "Next week I will visit my parents",
+            infinitive: "visitare",
+            conjugation: "io visiterò",
+          },
+          {
+            italian: "Ti aiuterò più tardi",
+            english: "I will help you later",
+            infinitive: "aiutare",
+            conjugation: "io aiuterò",
+          },
+          {
+            italian: "Domani sera andrò al supermercato",
+            english: "Tomorrow evening I will go to the supermarket",
+            infinitive: "andare",
+            conjugation: "io andrò",
+          },
+          {
+            italian: "Mangerai la pizza stasera?",
+            english: "Will you eat pizza tonight?",
+            infinitive: "mangiare",
+            conjugation: "tu mangerai",
+          },
+          {
+            italian: "Partirà alle otto domani mattina",
+            english: "He will leave at eight tomorrow morning",
+            infinitive: "partire",
+            conjugation: "lui partirà",
+          },
+          {
+            italian: "Studieremo italiano insieme domani",
+            english: "We will study Italian together tomorrow",
+            infinitive: "studiare",
+            conjugation: "noi studieremo",
+          },
+          {
+            italian: "Arriveranno in ritardo stasera",
+            english: "They will arrive late tonight",
+            infinitive: "arrivare",
+            conjugation: "loro arriveranno",
+          },
+          {
+            italian: "Berrò un caffè al bar più tardi",
+            english: "I will drink a coffee at the bar later",
+            infinitive: "bere",
+            conjugation: "io berrò",
+          },
+          {
+            italian: "Leggerai il libro questa sera",
+            english: "You will read the book this evening",
+            infinitive: "leggere",
+            conjugation: "tu leggerai",
+          },
+          {
+            italian: "Cucinerà la cena domani",
+            english: "She will cook dinner tomorrow",
+            infinitive: "cucinare",
+            conjugation: "lei cucinerà",
+          },
+          {
+            italian: "Compreremo una casa nuova l'anno prossimo",
+            english: "We will buy a new house next year",
+            infinitive: "comprare",
+            conjugation: "noi compreremo",
+          },
+          {
+            italian: "Dormirete bene stanotte",
+            english: "You will sleep well tonight",
+            infinitive: "dormire",
+            conjugation: "voi dormirete",
+          },
+          {
+            italian: "Guarderanno la televisione dopo cena",
+            english: "They will watch television after dinner",
+            infinitive: "guardare",
+            conjugation: "loro guarderanno",
+          },
+          {
+            italian: "Scriverò una lettera domani",
+            english: "I will write a letter tomorrow",
+            infinitive: "scrivere",
+            conjugation: "io scriverò",
+          },
+          {
+            italian: "Parlerai con il professore domani",
+            english: "You will speak with the professor tomorrow",
+            infinitive: "parlare",
+            conjugation: "tu parlerai",
+          },
+          {
+            italian: "Lavorerà fino a tardi stasera",
+            english: "He will work until late tonight",
+            infinitive: "lavorare",
+            conjugation: "lui lavorerà",
+          },
+          {
+            italian: "Vedremo un film questo weekend",
+            english: "We will see a movie this weekend",
+            infinitive: "vedere",
+            conjugation: "noi vedremo",
+          },
+          {
+            italian: "Faranno la spesa domani mattina",
+            english: "They will do the shopping tomorrow morning",
+            infinitive: "fare",
+            conjugation: "loro faranno",
+          },
+        ],
+        conditional: [
+          {
+            italian: "Vorrei un caffè, per favore",
+            english: "I would like a coffee, please",
+            infinitive: "volere",
+            conjugation: "io vorrei",
+          },
+          {
+            italian: "Potresti aiutarmi con questo?",
+            english: "Could you help me with this?",
+            infinitive: "potere",
+            conjugation: "tu potresti",
+          },
+          {
+            italian: "Preferirebbe tè invece di caffè",
+            english: "She would prefer tea instead of coffee",
+            infinitive: "preferire",
+            conjugation: "lei preferirebbe",
+          },
+          {
+            italian: "Non andremmo mai in quel ristorante",
+            english: "We would never go to that restaurant",
+            infinitive: "andare",
+            conjugation: "noi non andremmo",
+          },
+          {
+            italian: "Dovreste studiare di più",
+            english: "You should study more",
+            infinitive: "dovere",
+            conjugation: "voi dovreste",
+          },
+          {
+            italian: "Non comprerebbero quella macchina",
+            english: "They wouldn't buy that car",
+            infinitive: "comprare",
+            conjugation: "loro non comprerebbero",
+          },
+          {
+            italian: "Viaggerei per il mondo se avessi soldi",
+            english: "I would travel the world if I had money",
+            infinitive: "viaggiare",
+            conjugation: "io viaggerei",
+          },
+          {
+            italian: "Cosa faresti in questa situazione?",
+            english: "What would you do in this situation?",
+            infinitive: "fare",
+            conjugation: "tu faresti",
+          },
+          {
+            italian: "Non vivrebbe mai da solo",
+            english: "He would never live alone",
+            infinitive: "vivere",
+            conjugation: "lui non vivrebbe",
+          },
+          {
+            italian: "Mangeremmo la pizza se fosse buona",
+            english: "We would eat the pizza if it were good",
+            infinitive: "mangiare",
+            conjugation: "noi mangeremmo",
+          },
+          {
+            italian: "Non dormireste in quell'hotel",
+            english: "You wouldn't sleep in that hotel",
+            infinitive: "dormire",
+            conjugation: "voi non dormireste",
+          },
+          {
+            italian: "Lavorerebbero di più se fossero pagati meglio",
+            english: "They would work more if they were paid better",
+            infinitive: "lavorare",
+            conjugation: "loro lavorerebbero",
+          },
+          {
+            italian: "Mi piacerebbe vivere in Italia",
+            english: "I would love to live in Italy",
+            infinitive: "piacere",
+            conjugation: "mi piacerebbe",
+          },
+          {
+            italian: "Non ti piacerebbe questo film",
+            english: "You wouldn't like this film",
+            infinitive: "piacere",
+            conjugation: "non ti piacerebbe",
+          },
+          {
+            italian: "Gli piacerebbe giocare a calcio",
+            english: "He would like to play soccer",
+            infinitive: "piacere",
+            conjugation: "gli piacerebbe",
+          },
+          {
+            italian: "Ha detto che sarebbe arrivato tardi",
+            english: "He said he would arrive late",
+            infinitive: "arrivare",
+            conjugation: "lui sarebbe",
+          },
+          {
+            italian: "Non ha detto che avrebbe chiamato",
+            english: "She didn't say she would call",
+            infinitive: "chiamare",
+            conjugation: "lei non avrebbe",
+          },
+          {
+            italian: "Pensavo che avreste capito",
+            english: "I thought you would understand",
+            infinitive: "capire",
+            conjugation: "voi avreste",
+          },
+          {
+            italian: "Studierei di più se fossi in te",
+            english: "I would study more if I were you",
+            infinitive: "studiare",
+            conjugation: "io studierei",
+          },
+          {
+            italian: "Non parlerei con lui se fossi in te",
+            english: "I wouldn't speak with him if I were you",
+            infinitive: "parlare",
+            conjugation: "io non parlerei",
+          },
+        ],
+        imperfetto: [
+          {
+            italian: "Quando ero giovane, giocavo a calcio ogni giorno",
+            english: "When I was young, I played soccer every day",
+            infinitive: "giocare",
+            conjugation: "io giocavo",
+          },
+          {
+            italian: "Andavi sempre a scuola in bicicletta",
+            english: "You always went to school by bicycle",
+            infinitive: "andare",
+            conjugation: "tu andavi",
+          },
+          {
+            italian: "Mia nonna cucinava sempre la pasta la domenica",
+            english: "My grandmother always cooked pasta on Sundays",
+            infinitive: "cucinare",
+            conjugation: "lei cucinava",
+          },
+          {
+            italian: "Da bambini guardavamo la televisione ogni sera",
+            english: "As children we watched television every evening",
+            infinitive: "guardare",
+            conjugation: "noi guardavamo",
+          },
+          {
+            italian: "I miei genitori lavoravano fino a tardi",
+            english: "My parents used to work until late",
+            infinitive: "lavorare",
+            conjugation: "loro lavoravano",
+          },
+          {
+            italian: "Abitavo a Roma quando avevo vent'anni",
+            english: "I lived in Rome when I was twenty",
+            infinitive: "abitare",
+            conjugation: "io abitavo",
+          },
+          {
+            italian: "Studiavi medicina all'università?",
+            english: "Did you study medicine at university?",
+            infinitive: "studiare",
+            conjugation: "tu studiavi",
+          },
+          {
+            italian: "Mio padre leggeva il giornale ogni mattina",
+            english: "My father read the newspaper every morning",
+            infinitive: "leggere",
+            conjugation: "lui leggeva",
+          },
+          {
+            italian: "Prendevamo sempre il caffè al bar",
+            english: "We always had coffee at the bar",
+            infinitive: "prendere",
+            conjugation: "noi prendevamo",
+          },
+          {
+            italian: "I bambini giocavano nel parco tutti i giorni",
+            english: "The children played in the park every day",
+            infinitive: "giocare",
+            conjugation: "loro giocavano",
+          },
+          {
+            italian: "Non mangiavo mai verdure quando ero piccolo",
+            english: "I never ate vegetables when I was little",
+            infinitive: "mangiare",
+            conjugation: "io non mangiavo",
+          },
+          {
+            italian: "Non parlavi inglese da giovane",
+            english: "You didn't speak English when you were young",
+            infinitive: "parlare",
+            conjugation: "tu non parlavi",
+          },
+          {
+            italian: "Ero molto timido da bambino",
+            english: "I was very shy as a child",
+            infinitive: "essere",
+            conjugation: "io ero",
+          },
+          {
+            italian: "Eri sempre felice quando andavi al mare",
+            english: "You were always happy when you went to the sea",
+            infinitive: "essere",
+            conjugation: "tu eri",
+          },
+          {
+            italian: "Era una giornata molto calda",
+            english: "It was a very hot day",
+            infinitive: "essere",
+            conjugation: "era",
+          },
+          {
+            italian: "Eravamo molto stanchi dopo il lavoro",
+            english: "We were very tired after work",
+            infinitive: "essere",
+            conjugation: "noi eravamo",
+          },
+          {
+            italian: "Avevo dieci anni quando ho imparato a nuotare",
+            english: "I was ten years old when I learned to swim",
+            infinitive: "avere",
+            conjugation: "io avevo",
+          },
+          {
+            italian: "Avevi sempre fame dopo la scuola",
+            english: "You were always hungry after school",
+            infinitive: "avere",
+            conjugation: "tu avevi",
+          },
+          {
+            italian: "Leggevo mentre aspettavo l'autobus",
+            english: "I was reading while waiting for the bus",
+            infinitive: "leggere",
+            conjugation: "io leggevo",
+          },
+          {
+            italian: "Dormivi quando ho chiamato",
+            english: "You were sleeping when I called",
+            infinitive: "dormire",
+            conjugation: "tu dormivi",
+          },
+        ],
+      };
+
+      // Current settings
+      let currentSelectedSentences = [];
+      let customSentencesOption = "include"; // 'exclude', 'include', or 'only'
+
+      // Custom sentences storage
+      let customSentences = {
+        future: [],
+        conditional: [],
+        imperfetto: [],
+      };
+
+      // Function to pronounce Italian sentences
+      function pronounceSentence(sentence) {
+        if (typeof responsiveVoice !== "undefined") {
+          responsiveVoice.speak(sentence, "Italian Male", {
+            rate: 0.9,
+            pitch: 1,
+            volume: 1,
+          });
+        } else {
+          console.log("ResponsiveVoice not loaded yet");
+          alert(
+            "Pronunciation feature is still loading. Please try again in a moment."
+          );
+        }
+      }
+
+      // Copy sentence to clipboard
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            console.log(`Copied "${text}" to clipboard`);
+
+            // Visual feedback
+            const copyIcons = document.querySelectorAll(".copy-icon");
+            copyIcons.forEach((icon) => {
+              if (icon.onclick.toString().includes(text.substring(0, 20))) {
+                const originalText = icon.textContent;
+                icon.textContent = "✓";
+                setTimeout(() => {
+                  icon.textContent = originalText;
+                }, 1000);
+              }
+            });
+          })
+          .catch((err) => {
+            console.error("Failed to copy to clipboard:", err);
+            alert(`Copy this sentence: ${text}`);
+          });
+      }
+
+      // Open Italian dictionary for first word of sentence
+      function openDictionary(sentence) {
+        const firstWord = sentence
+          .split(" ")[0]
+          .toLowerCase()
+          .replace(/[.,!?;:]/, "");
+        const dictionaryUrl = `https://www.dizionario-italiano.it/dizionario-italiano.php?parola=${encodeURIComponent(
+          firstWord
+        )}`;
+        window.open(dictionaryUrl, "_blank");
+      }
+
+      // Update custom sentences option
+      function updateCustomSentencesOption() {
+        const selectedOption = document.querySelector(
+          'input[name="customSentencesOption"]:checked'
+        );
+        if (selectedOption) {
+          customSentencesOption = selectedOption.value;
+          console.log(
+            `Custom sentences option changed to: ${customSentencesOption}`
+          );
+          updateSentenceCounts();
+        }
+      }
+
+      // Update custom sentences count display
+      function updateCustomSentencesCount() {
+        const totalCustomSentences = Object.values(customSentences).reduce(
+          (total, tense) => total + tense.length,
+          0
+        );
+        document.getElementById(
+          "customSentencesCount"
+        ).textContent = `${totalCustomSentences} custom sentences total`;
+      }
+
+      // Get random sentences based on user selection
+      function getRandomSentences() {
+        console.log("Getting random sentences...");
+        const selectedSentences = [];
+
+        const tenses = [
+          {
+            name: "future",
+            checkboxId: "includeFuture",
+            displayName: "Futuro",
+          },
+          {
+            name: "conditional",
+            checkboxId: "includeConditional",
+            displayName: "Condizionale",
+          },
+          {
+            name: "imperfetto",
+            checkboxId: "includeImperfetto",
+            displayName: "Imperfetto",
+          },
+        ];
+
+        const sentenceCount =
+          parseInt(document.getElementById("sentenceNumber").value) || 3;
+        let availableSentences = [];
+
+        tenses.forEach((tense) => {
+          const checkbox = document.getElementById(tense.checkboxId);
+          if (checkbox && checkbox.checked) {
+            let builtInSentences = [];
+            let customSentencesForTense = [];
+
+            // Get built-in sentences
+            if (customSentencesOption !== "only") {
+              builtInSentences = sentenceLists[tense.name] || [];
+            }
+
+            // Get custom sentences
+            if (customSentencesOption !== "exclude") {
+              customSentencesForTense = customSentences[tense.name] || [];
+            }
+
+            const allSentences = [
+              ...builtInSentences,
+              ...customSentencesForTense,
+            ];
+
+            allSentences.forEach((sentence) => {
+              availableSentences.push({
+                ...sentence,
+                tense: tense.displayName,
+                isCustom: customSentencesForTense.includes(sentence),
+              });
+            });
+          }
+        });
+
+        if (availableSentences.length === 0) {
+          document.getElementById("selectedSentences").innerHTML =
+            '<div class="empty-state">No sentences available. Please select at least one tense and check your custom sentences settings.</div>';
+          return;
+        }
+
+        // Shuffle and select sentences
+        const shuffled = [...availableSentences].sort(
+          () => 0.5 - Math.random()
+        );
+        const selectedCount = Math.min(sentenceCount, shuffled.length);
+
+        for (let i = 0; i < selectedCount; i++) {
+          selectedSentences.push(shuffled[i]);
+        }
+
+        currentSelectedSentences = selectedSentences;
+        displaySelectedSentences(selectedSentences);
+
+        // Show hint buttons
+        const hasAnySentences = selectedSentences.length > 0;
+        document.getElementById("translationHintBtn").style.display =
+          hasAnySentences ? "inline-block" : "none";
+        document.getElementById("infinitiveHintBtn").style.display =
+          hasAnySentences ? "inline-block" : "none";
+        document.getElementById("conjugationHintBtn").style.display =
+          hasAnySentences ? "inline-block" : "none";
+      }
+
+      // Display selected sentences
+      function displaySelectedSentences(sentences) {
+        const container = document.getElementById("selectedSentences");
+
+        if (sentences.length === 0) {
+          container.innerHTML =
+            '<div class="empty-state">No sentences selected. Check your settings and try again.</div>';
+          return;
+        }
+
+        container.innerHTML = sentences
+          .map((sentence, index) => {
+            const customClass = sentence.isCustom ? " custom" : "";
+            const customIndicator = sentence.isCustom
+              ? '<span class="custom-indicator">⭐</span>'
+              : "";
+
+            return `<div class="sentence-card${customClass}">
+                      <div class="sentence-main">
+                        ${customIndicator}${sentence.italian}
+                      </div>
+                      <div class="sentence-details">
+                        <div class="sentence-translation" style="display: none;">
+                          ${sentence.english || "No translation available"}
+                        </div>
+                        <div class="sentence-infinitive" style="display: none;">
+                          <strong>Infinitive:</strong> ${
+                            sentence.infinitive || "Not specified"
+                          }
+                        </div>
+                        <div class="sentence-conjugation" style="display: none;">
+                          <strong>Conjugation:</strong> ${
+                            sentence.conjugation || "Not specified"
+                          }
+                        </div>
+                        <div class="sentence-tense-label">${
+                          sentence.tense
+                        }</div>
+                        <div class="sentence-icons">
+                          <span class="speaker-icon" onclick="pronounceSentence('${sentence.italian.replace(
+                            /'/g,
+                            "\\'"
+                          )}')">🔊</span>
+                          <span class="copy-icon" onclick="copyToClipboard('${sentence.italian.replace(
+                            /'/g,
+                            "\\'"
+                          )}')">📋</span>
+                          <span class="dict-icon" onclick="openDictionary('${sentence.italian.replace(
+                            /'/g,
+                            "\\'"
+                          )}')">📖</span>
+                        </div>
+                      </div>
+                    </div>`;
+          })
+          .join("");
+      }
+
+      // Clear selected sentences
+      function clearSentences() {
+        document.getElementById("selectedSentences").innerHTML =
+          '<div class="empty-state">Click "Get New Sentences" to start practicing!</div>';
+        currentSelectedSentences = [];
+        document.getElementById("translationHintBtn").style.display = "none";
+        document.getElementById("infinitiveHintBtn").style.display = "none";
+        document.getElementById("conjugationHintBtn").style.display = "none";
+      }
+
+      // Show/hide translation hints
+      function showTranslationHints() {
+        const translations = document.querySelectorAll(".sentence-translation");
+        translations.forEach((translation) => {
+          translation.style.display =
+            translation.style.display === "none" ? "block" : "none";
+        });
+      }
+
+      // Show/hide infinitive hints
+      function showInfinitiveHints() {
+        const infinitives = document.querySelectorAll(".sentence-infinitive");
+        infinitives.forEach((infinitive) => {
+          infinitive.style.display =
+            infinitive.style.display === "none" ? "block" : "none";
+        });
+      }
+
+      // Show/hide conjugation hints
+      function showConjugationHints() {
+        const conjugations = document.querySelectorAll(".sentence-conjugation");
+        conjugations.forEach((conjugation) => {
+          conjugation.style.display =
+            conjugation.style.display === "none" ? "block" : "none";
+        });
+      }
+
+      // Add custom sentence
+      function addCustomSentence(tense) {
+        const italian = document
+          .getElementById(
+            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
+          )
+          .value.trim();
+        const english = document
+          .getElementById(
+            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
+          )
+          .value.trim();
+        const infinitive = document
+          .getElementById(
+            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Infinitive`
+          )
+          .value.trim();
+        const conjugation = document
+          .getElementById(
+            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Conjugation`
+          )
+          .value.trim();
+
+        if (!italian) {
+          alert("Please enter at least the Italian sentence.");
+          return;
+        }
+
+        // Check if sentence already exists
+        const existingCustomSentence = customSentences[tense].find(
+          (sentence) => sentence.italian.toLowerCase() === italian.toLowerCase()
+        );
+
+        if (existingCustomSentence) {
+          alert("This sentence is already in your custom list.");
+          return;
+        }
+
+        // Add the sentence
+        const newSentence = {
+          italian: italian,
+          english: english || null,
+          infinitive: infinitive || null,
+          conjugation: conjugation || null,
+          isCustom: true,
+        };
+
+        customSentences[tense].push(newSentence);
+
+        // Clear form
+        document.getElementById(
+          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
+        ).value = "";
+        document.getElementById(
+          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
+        ).value = "";
+        document.getElementById(
+          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Infinitive`
+        ).value = "";
+        document.getElementById(
+          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Conjugation`
+        ).value = "";
+
+        saveCustomSentences();
+        updateSentenceLists();
+        updateSentenceCounts();
+        updateCustomSentencesCount();
+
+        console.log(`Added custom ${tense} sentence: ${italian}`);
+      }
+
+      // Remove custom sentence
+      function removeCustomSentence(tense, italian) {
+        customSentences[tense] = customSentences[tense].filter(
+          (sentence) => sentence.italian !== italian
+        );
+        saveCustomSentences();
+        updateSentenceLists();
+        updateSentenceCounts();
+        updateCustomSentencesCount();
+      }
+
+      // Update sentence lists display
+      function updateSentenceLists() {
+        const tenses = ["future", "conditional", "imperfetto"];
+
+        tenses.forEach((tense) => {
+          const listElement = document.getElementById(`${tense}List`);
+          const countElement = document.getElementById(`${tense}CountManage`);
+
+          const customSentencesForTense = customSentences[tense] || [];
+
+          listElement.innerHTML = customSentencesForTense
+            .map((sentence) => {
+              return `<div class="sentence-item custom">
+                        <div class="sentence-item-main">⭐ ${
+                          sentence.italian
+                        }</div>
+                        <div class="sentence-item-details">
+                          ${
+                            sentence.english
+                              ? `English: ${sentence.english}`
+                              : ""
+                          }
+                          ${
+                            sentence.infinitive
+                              ? ` | Infinitive: ${sentence.infinitive}`
+                              : ""
+                          }
+                          ${
+                            sentence.conjugation
+                              ? ` | Conjugation: ${sentence.conjugation}`
+                              : ""
+                          }
+                        </div>
+                        <span class="remove-sentence" onclick="removeCustomSentence('${tense}', '${sentence.italian.replace(
+                /'/g,
+                "\\'"
+              )}')">×</span>
+                      </div>`;
+            })
+            .join("");
+
+          countElement.textContent = `${customSentencesForTense.length} custom sentences`;
+        });
+      }
+
+      // Update sentence counts in practice tab
+      function updateSentenceCounts() {
+        const tenses = ["future", "conditional", "imperfetto"];
+
+        tenses.forEach((tense) => {
+          const builtInSentences = sentenceLists[tense] || [];
+          const customSentencesForTense = customSentences[tense] || [];
+
+          let totalCount = 0;
+          if (customSentencesOption === "exclude") {
+            totalCount = builtInSentences.length;
+          } else if (customSentencesOption === "only") {
+            totalCount = customSentencesForTense.length;
+          } else {
+            totalCount =
+              builtInSentences.length + customSentencesForTense.length;
+          }
+
+          document.getElementById(`${tense}Count`).textContent = totalCount;
+        });
+      }
+
+      // Save custom sentences to localStorage
+      function saveCustomSentences() {
+        try {
+          localStorage.setItem(
+            "italianCustomSentences",
+            JSON.stringify(customSentences)
+          );
+          console.log("Custom sentences saved successfully");
+        } catch (e) {
+          console.log("Could not save custom sentences:", e);
+        }
+      }
+
+      // Load saved custom sentences from localStorage
+      function loadSavedCustomSentences() {
+        try {
+          const saved = localStorage.getItem("italianCustomSentences");
+          if (saved) {
+            customSentences = JSON.parse(saved);
+            console.log("Loaded saved custom sentences");
+          }
+        } catch (e) {
+          console.log("Could not load saved custom sentences:", e);
+        }
+      }
+
+      // Load JSON file with sentence lists
+      function loadJSONFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const jsonData = JSON.parse(e.target.result);
+
+            if (validateJSONStructure(jsonData)) {
+              Object.keys(jsonData).forEach((tense) => {
+                if (sentenceLists[tense]) {
+                  sentenceLists[tense] = [
+                    ...sentenceLists[tense],
+                    ...jsonData[tense],
+                  ];
+                }
+              });
+              updateSentenceCounts();
+              updateSentenceLists();
+              showImportStatus("JSON file loaded successfully!", "success");
+            } else {
+              showImportStatus(
+                "Invalid JSON structure. Please check the format.",
+                "error"
+              );
+            }
+          } catch (error) {
+            showImportStatus(
+              "Error parsing JSON file: " + error.message,
+              "error"
+            );
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // Validate JSON structure
+      function validateJSONStructure(data) {
+        const validTenses = ["future", "conditional", "imperfetto"];
+
+        return validTenses.some((tense) => {
+          if (data[tense] && Array.isArray(data[tense])) {
+            return data[tense].every(
+              (item) => item.italian && typeof item.italian === "string"
+            );
+          }
+          return false;
+        });
+      }
+
+      // Show import status message
+      function showImportStatus(message, type) {
+        const statusDiv = document.getElementById("importStatus");
+        statusDiv.textContent = message;
+        statusDiv.className = `import-status ${type}`;
+
+        setTimeout(() => {
+          statusDiv.style.display = "none";
+        }, 5000);
+      }
+
+      // Download sample JSON file
+      function downloadSampleJSON() {
+        const sample = {
+          future: [
+            {
+              italian: "Domani andrò in biblioteca",
+              english: "Tomorrow I will go to the library",
+              infinitive: "andare",
+              conjugation: "io andrò",
+            },
+            {
+              italian: "La settimana prossima studieremo insieme",
+              english: "Next week we will study together",
+              infinitive: "studiare",
+              conjugation: "noi studieremo",
+            },
+          ],
+          conditional: [
+            {
+              italian: "Vorresti venire con noi?",
+              english: "Would you like to come with us?",
+              infinitive: "volere",
+              conjugation: "tu vorresti",
+            },
+            {
+              italian: "Dovremmo partire presto",
+              english: "We should leave early",
+              infinitive: "dovere",
+              conjugation: "noi dovremmo",
+            },
+          ],
+          imperfetto: [
+            {
+              italian: "Da piccolo mangiavo sempre il gelato",
+              english: "As a child I always ate ice cream",
+              infinitive: "mangiare",
+              conjugation: "io mangiavo",
+            },
+            {
+              italian: "Ogni estate andavamo al mare",
+              english: "Every summer we went to the sea",
+              infinitive: "andare",
+              conjugation: "noi andavamo",
+            },
+          ],
+        };
+
+        const jsonString = JSON.stringify(sample, null, 2);
+
+        try {
+          const blob = new Blob([jsonString], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const downloadLink = document.createElement("a");
+          downloadLink.href = url;
+          downloadLink.download = "italian_sentences_sample.json";
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          URL.revokeObjectURL(url);
+
+          showImportStatus("Sample JSON downloaded!", "success");
+        } catch (error) {
+          console.error("Download failed:", error);
+          showImportStatus("Download failed - check console", "error");
+        }
+      }
+
+      // Download custom sentences as backup
+      function downloadCustomSentences() {
+        if (
+          !customSentences ||
+          Object.keys(customSentences).every(
+            (key) => customSentences[key].length === 0
+          )
+        ) {
+          showImportStatus("No custom sentences to backup!", "error");
+          return;
+        }
+
+        const backup = {
+          timestamp: new Date().toISOString(),
+          customSentences: customSentences,
+        };
+
+        const jsonString = JSON.stringify(backup, null, 2);
+
+        try {
+          const blob = new Blob([jsonString], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const downloadLink = document.createElement("a");
+          downloadLink.href = url;
+          downloadLink.download = `italian_custom_sentences_backup_${
+            new Date().toISOString().split("T")[0]
+          }.json`;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          URL.revokeObjectURL(url);
+
+          showImportStatus("Custom sentences backup downloaded!", "success");
+        } catch (error) {
+          console.error("Backup failed:", error);
+          showImportStatus("Backup failed - check console", "error");
+        }
+      }
+
+      // Load custom sentences from backup file
+      function loadCustomSentencesFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const backupData = JSON.parse(e.target.result);
+
+            if (
+              backupData.customSentences &&
+              typeof backupData.customSentences === "object"
+            ) {
+              const shouldReplace = confirm(
+                "Do you want to REPLACE your current custom sentences with the backup, or MERGE them together?\n\nClick OK to REPLACE, Cancel to MERGE"
+              );
+
+              if (shouldReplace) {
+                customSentences = backupData.customSentences;
+              } else {
+                // Merge custom sentences
+                Object.keys(backupData.customSentences).forEach((tense) => {
+                  if (Array.isArray(backupData.customSentences[tense])) {
+                    backupData.customSentences[tense].forEach((sentence) => {
+                      const exists = customSentences[tense].find(
+                        (existing) => existing.italian === sentence.italian
+                      );
+                      if (!exists) {
+                        customSentences[tense].push(sentence);
+                      }
+                    });
+                  }
+                });
+              }
+
+              saveCustomSentences();
+              updateSentenceCounts();
+              updateSentenceLists();
+              updateCustomSentencesCount();
+              showImportStatus(
+                "Custom sentences restored successfully!",
+                "success"
+              );
+            } else {
+              showImportStatus("Invalid backup file format.", "error");
+            }
+          } catch (error) {
+            showImportStatus(
+              "Error reading backup file: " + error.message,
+              "error"
+            );
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // Tab switching
+      function setupTabSwitching() {
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((content) => content.classList.remove("active"));
+
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.tab).classList.add("active");
+
+            if (tab.dataset.tab === "manage") {
+              updateSentenceLists();
+            }
+          });
+        });
+      }
+
+      // Handle Enter key in input fields
+      function setupKeyHandlers() {
+        document.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            const target = e.target;
+            if (target.id.includes("newFuture")) {
+              addCustomSentence("future");
+            } else if (target.id.includes("newConditional")) {
+              addCustomSentence("conditional");
+            } else if (target.id.includes("newImperfetto")) {
+              addCustomSentence("imperfetto");
+            }
+          }
+        });
+      }
+
+      // Initialize the app
+      function initializeApp() {
+        loadSavedCustomSentences();
+        updateSentenceCounts();
+        updateSentenceLists();
+        updateCustomSentencesCount();
+        setupTabSwitching();
+        setupKeyHandlers();
+      }
+
+      // Wait for DOM to be ready before initializing
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeApp);
+      } else {
+        initializeApp();
+      }
+
+      // Register service worker for PWA functionality
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register(
+            "data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGV2ZW50LndhaXRVbnRpbChzZWxmLnNraXBXYWl0aW5nKCkpOwp9KTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignYWN0aXZhdGUnLCBldmVudCA9PiB7CiAgZXZlbnQud2FpdFVudGlsKHNlbGYuY2xpZW50cy5jbGFpbSgpKTsKfSk7CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7"
+          )
+          .then(() => console.log("Service Worker registered"))
+          .catch((err) => console.log("Service Worker registration failed"));
+      }
+    </script>
+  </body>
+</html>

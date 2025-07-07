@@ -1506,6 +1506,7 @@
       }
 
       // Display selected sentences
+      // Display selected sentences
       function displaySelectedSentences(sentences) {
         const container = document.getElementById("selectedSentences");
 
@@ -1523,216 +1524,46 @@
               : "";
 
             return `<div class="sentence-card${customClass}">
-                      <div class="sentence-main">
+                        <div class="sentence-main">
                         ${customIndicator}${sentence.italian}
-                      </div>
-                      <div class="sentence-details">
+                        </div>
+                        <div class="sentence-details">
                         <div class="sentence-translation" style="display: none;">
-                          ${sentence.english || "No translation available"}
+                            ${sentence.english || "No translation available"}
                         </div>
-                        <div class="sentence-infinitive" style="display: none;">
-                          <strong>Infinitive:</strong> ${
-                            sentence.infinitive || "Not specified"
-                          }
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px;">
+                            <div class="sentence-infinitive" style="display: none;">
+                            <strong>Infinitive:</strong> ${
+                              sentence.infinitive || "Not specified"
+                            }
+                            </div>
+                            <div class="sentence-conjugation" style="display: none;">
+                            <strong>Conjugation:</strong> ${
+                              sentence.conjugation || "Not specified"
+                            }
+                            </div>
+                            <div class="sentence-tense-label" style="display: none;">${
+                              sentence.tense
+                            }</div>
+                            <div class="sentence-icons" style="margin-left: auto;">
+                            <span class="speaker-icon" onclick="pronounceSentence('${sentence.italian.replace(
+                              /'/g,
+                              "\\'"
+                            )}')">🔊</span>
+                            <span class="copy-icon" onclick="copyToClipboard('${sentence.italian.replace(
+                              /'/g,
+                              "\\'"
+                            )}')">📋</span>
+                            <span class="dict-icon" onclick="openDictionary('${sentence.italian.replace(
+                              /'/g,
+                              "\\'"
+                            )}')">📖</span>
+                            </div>
                         </div>
-                        <div class="sentence-conjugation" style="display: none;">
-                          <strong>Conjugation:</strong> ${
-                            sentence.conjugation || "Not specified"
-                          }
                         </div>
-                        <div class="sentence-tense-label" style="display: none;">${
-                          sentence.tense
-                        }</div>
-                        <div class="sentence-icons">
-                          <span class="speaker-icon" onclick="pronounceSentence('${sentence.italian.replace(
-                            /'/g,
-                            "\\'"
-                          )}')">🔊</span>
-                          <span class="copy-icon" onclick="copyToClipboard('${sentence.italian.replace(
-                            /'/g,
-                            "\\'"
-                          )}')">📋</span>
-                          <span class="dict-icon" onclick="openDictionary('${sentence.italian.replace(
-                            /'/g,
-                            "\\'"
-                          )}')">📖</span>
-                        </div>
-                      </div>
                     </div>`;
           })
           .join("");
-      }
-
-      // Clear selected sentences
-      function clearSentences() {
-        document.getElementById("selectedSentences").innerHTML =
-          '<div class="empty-state">Click "Get New Sentences" to start practicing!</div>';
-        currentSelectedSentences = [];
-        document.getElementById("translationHintBtn").style.display = "none";
-        document.getElementById("infinitiveHintBtn").style.display = "none";
-        document.getElementById("conjugationHintBtn").style.display = "none";
-      }
-
-      // Show/hide translation hints
-      function showTranslationHints() {
-        const translations = document.querySelectorAll(".sentence-translation");
-        translations.forEach((translation) => {
-          translation.style.display =
-            translation.style.display === "none" ? "block" : "none";
-        });
-      }
-
-      // Show/hide infinitive hints
-      function showInfinitiveHints() {
-        const infinitives = document.querySelectorAll(".sentence-infinitive");
-        infinitives.forEach((infinitive) => {
-          infinitive.style.display =
-            infinitive.style.display === "none" ? "block" : "none";
-        });
-      }
-
-      // Show/hide conjugation hints
-      // Show/hide conjugation hints
-      function showConjugationHints() {
-        const conjugations = document.querySelectorAll(".sentence-conjugation");
-        const tenseLabels = document.querySelectorAll(".sentence-tense-label");
-
-        conjugations.forEach((conjugation) => {
-          conjugation.style.display =
-            conjugation.style.display === "none" ? "block" : "none";
-        });
-
-        tenseLabels.forEach((label) => {
-          label.style.display =
-            label.style.display === "none" ? "block" : "none";
-        });
-      }
-
-      // Add custom sentence
-      function addCustomSentence(tense) {
-        const italian = document
-          .getElementById(
-            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
-          )
-          .value.trim();
-        const english = document
-          .getElementById(
-            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
-          )
-          .value.trim();
-        const infinitive = document
-          .getElementById(
-            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Infinitive`
-          )
-          .value.trim();
-        const conjugation = document
-          .getElementById(
-            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Conjugation`
-          )
-          .value.trim();
-
-        if (!italian) {
-          alert("Please enter at least the Italian sentence.");
-          return;
-        }
-
-        // Check if sentence already exists
-        const existingCustomSentence = customSentences[tense].find(
-          (sentence) => sentence.italian.toLowerCase() === italian.toLowerCase()
-        );
-
-        if (existingCustomSentence) {
-          alert("This sentence is already in your custom list.");
-          return;
-        }
-
-        // Add the sentence
-        const newSentence = {
-          italian: italian,
-          english: english || null,
-          infinitive: infinitive || null,
-          conjugation: conjugation || null,
-          isCustom: true,
-        };
-
-        customSentences[tense].push(newSentence);
-
-        // Clear form
-        document.getElementById(
-          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
-        ).value = "";
-        document.getElementById(
-          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
-        ).value = "";
-        document.getElementById(
-          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Infinitive`
-        ).value = "";
-        document.getElementById(
-          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Conjugation`
-        ).value = "";
-
-        saveCustomSentences();
-        updateSentenceLists();
-        updateSentenceCounts();
-        updateCustomSentencesCount();
-
-        console.log(`Added custom ${tense} sentence: ${italian}`);
-      }
-
-      // Remove custom sentence
-      function removeCustomSentence(tense, italian) {
-        customSentences[tense] = customSentences[tense].filter(
-          (sentence) => sentence.italian !== italian
-        );
-        saveCustomSentences();
-        updateSentenceLists();
-        updateSentenceCounts();
-        updateCustomSentencesCount();
-      }
-
-      // Update sentence lists display
-      function updateSentenceLists() {
-        const tenses = ["future", "conditional", "imperfetto"];
-
-        tenses.forEach((tense) => {
-          const listElement = document.getElementById(`${tense}List`);
-          const countElement = document.getElementById(`${tense}CountManage`);
-
-          const customSentencesForTense = customSentences[tense] || [];
-
-          listElement.innerHTML = customSentencesForTense
-            .map((sentence) => {
-              return `<div class="sentence-item custom">
-                        <div class="sentence-item-main">⭐ ${
-                          sentence.italian
-                        }</div>
-                        <div class="sentence-item-details">
-                          ${
-                            sentence.english
-                              ? `English: ${sentence.english}`
-                              : ""
-                          }
-                          ${
-                            sentence.infinitive
-                              ? ` | Infinitive: ${sentence.infinitive}`
-                              : ""
-                          }
-                          ${
-                            sentence.conjugation
-                              ? ` | Conjugation: ${sentence.conjugation}`
-                              : ""
-                          }
-                        </div>
-                        <span class="remove-sentence" onclick="removeCustomSentence('${tense}', '${sentence.italian.replace(
-                /'/g,
-                "\\'"
-              )}')">×</span>
-                      </div>`;
-            })
-            .join("");
-
-          countElement.textContent = `${customSentencesForTense.length} custom sentences`;
-        });
       }
 
       // Update sentence counts in practice tab

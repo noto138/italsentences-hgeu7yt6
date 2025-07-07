@@ -1540,7 +1540,7 @@
                             sentence.conjugation || "Not specified"
                           }
                         </div>
-                        <div class="sentence-tense-label">${
+                        <div class="sentence-tense-label" style="display: none;">${
                           sentence.tense
                         }</div>
                         <div class="sentence-icons">
@@ -1592,11 +1592,19 @@
       }
 
       // Show/hide conjugation hints
+      // Show/hide conjugation hints
       function showConjugationHints() {
         const conjugations = document.querySelectorAll(".sentence-conjugation");
+        const tenseLabels = document.querySelectorAll(".sentence-tense-label");
+
         conjugations.forEach((conjugation) => {
           conjugation.style.display =
             conjugation.style.display === "none" ? "block" : "none";
+        });
+
+        tenseLabels.forEach((label) => {
+          label.style.display =
+            label.style.display === "none" ? "block" : "none";
         });
       }
 

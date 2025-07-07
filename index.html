@@ -1381,16 +1381,30 @@
           });
       }
 
-      // Open Italian dictionary for first word of sentence
+      /// Open Italian conjugation page for the infinitive
       function openDictionary(sentence) {
-        const firstWord = sentence
-          .split(" ")[0]
-          .toLowerCase()
-          .replace(/[.,!?;:]/, "");
-        const dictionaryUrl = `https://www.dizionario-italiano.it/dizionario-italiano.php?parola=${encodeURIComponent(
-          firstWord
-        )}`;
-        window.open(dictionaryUrl, "_blank");
+        // Find the sentence data to get the infinitive
+        const sentenceData = currentSelectedSentences.find(
+          (s) => s.italian === sentence
+        );
+
+        if (sentenceData && sentenceData.infinitive) {
+          const infinitive = sentenceData.infinitive.toUpperCase();
+          const conjugationUrl = `https://www.dizionario-italiano.it/dizionario-italiano-coniugazione.php?lemma=${encodeURIComponent(
+            infinitive
+          )}100&bc=${encodeURIComponent(sentenceData.infinitive)}`;
+          window.open(conjugationUrl, "_blank");
+        } else {
+          // Fallback to regular dictionary if no infinitive available
+          const firstWord = sentence
+            .split(" ")[0]
+            .toLowerCase()
+            .replace(/[.,!?;:]/, "");
+          const dictionaryUrl = `https://www.dizionario-italiano.it/dizionario-italiano.php?parola=${encodeURIComponent(
+            firstWord
+          )}`;
+          window.open(dictionaryUrl, "_blank");
+        }
       }
 
       // Update custom sentences option

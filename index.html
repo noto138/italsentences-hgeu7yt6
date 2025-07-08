@@ -636,6 +636,34 @@
               </div>
             </div>
 
+            <div
+              class="pronoun-selector"
+              style="
+                margin-bottom: 20px;
+                padding: 15px;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border: 1px solid #dee2e6;
+              "
+            >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  font-size: 0.95em;
+                  justify-content: center;
+                "
+              >
+                <input
+                  type="checkbox"
+                  id="showPronouns"
+                  onchange="updatePronounDisplay()"
+                />
+                Show pronouns in sentences (helpful for learning)
+              </label>
+            </div>
+
             <div class="sentence-display">
               <div class="selected-sentences" id="selectedSentences">
                 <div class="empty-state">
@@ -1407,6 +1435,45 @@
         }
       }
 
+      // Update pronoun display when checkbox changes
+      function updatePronounDisplay() {
+        if (currentSelectedSentences.length > 0) {
+          displaySelectedSentences(currentSelectedSentences);
+        }
+      }
+
+      // Function to add pronouns to sentences that need them
+      function addPronounToSentence(sentence, conjugation) {
+        const showPronouns = document.getElementById("showPronouns").checked;
+
+        if (!showPronouns) {
+          return sentence;
+        }
+
+        // Extract pronoun from conjugation (e.g., "lui partirà" -> "lui")
+        const pronounMatch = conjugation.match(
+          /^(io|tu|lui|lei|noi|voi|loro)\s/
+        );
+        if (!pronounMatch) {
+          return sentence;
+        }
+
+        const pronoun = pronounMatch[1];
+
+        // Don't add pronoun if sentence already starts with it or if it's io/tu/noi/voi (usually clear from context)
+        if (
+          sentence.toLowerCase().startsWith(pronoun) ||
+          ["io", "tu", "noi", "voi"].includes(pronoun)
+        ) {
+          return sentence;
+        }
+
+        // Add pronoun at the beginning for lui/lei/loro sentences
+        return `${
+          pronoun.charAt(0).toUpperCase() + pronoun.slice(1)
+        } ${sentence.toLowerCase()}`;
+      }
+
       // Update custom sentences option
       function updateCustomSentencesOption() {
         const selectedOption = document.querySelector(
@@ -1539,7 +1606,10 @@
 
             return `<div class="sentence-card${customClass}">
                         <div class="sentence-main">
-                        ${customIndicator}${sentence.italian}
+                        ${customIndicator}${addPronounToSentence(
+              sentence.italian,
+              sentence.conjugation
+            )}
                         </div>
                         <div class="sentence-details">
                         <div class="sentence-translation" style="display: none;">

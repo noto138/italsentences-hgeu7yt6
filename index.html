@@ -6,7 +6,7 @@
     <title>Italian Sentence Practice</title>
     <link
       rel="manifest"
-      href="data:application/json;base64,eyJuYW1lIjoiSXRhbGlhbiBTZW50ZW5jZSBQcmFjdGljZSIsInNob3J0X25hbWUiOiJJdGFsaWFuU2VudGVuY2VzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMyZTdkMzIiLCJ0aGVtZV9jb2xvciI6IiMyZTdkMzIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l4TWpBaUlHaGxhV2RvZEQwaU1USXdJajQ4WTJseVkyeGxJR040UFNJMk1DSWdZM2s5SWpZd0lpQnlQU0kwTUNJZ1ptbHNiRDBpSXpKbE56UXpNaUl2UGp4MFpYaDBJSGcyUFNJMk1DSWdlVEk5SXpRaUlITjBlV3hsUFNKbWFXeHNPaU4zYUdsMFpWdG1iMjUwTFhOcGVtVTZNVEZ3ZUNJZ2RHVjRkQzFoYm1Ob2IzSTlTVVJCSWoxa1NVUkJQQzlqYVhKamJHVStQQzl6ZG1jKyIsInNpemVzIjoiMTIweDEyMCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="
+      href="data:application/json;base64,eyJuYW1lIjoiSXRhbGlhbiBTZW50ZW5jZSBQcmFjdGljZSIsInNob3J0X25hbWUiOiJJdGFsaWFuU2VudGVuY2VzIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMyZTdkMzIiLCJ0aGVtZV9jb2xvciI6IiMyZTdkMzIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l4TWpBaUlHaGxhV2RvZEQwaU1USXdJajQ4WTJseVkyeGxJR040UFNJMk1DSWdZM2s5SWpZd0lpQnlQU0kwTUNJZ1ptbHNiRDBpSXpKbE56UXpNaUl2UGo4M1pYaDBJSGcyUFNJMk1DSWdlVEk5SXpRaUlITjBlV3hsUFNKbWFXeHNPaU4zYUdsMFpWdG1iMjUwTFhOcGVtVTZNVEZ3ZENJZ2RHVjRkQzFoYm1Ob2IzSTlTVVJCSWoxa1NVUkJQQzlqYVhKamJHVStQQzl6ZG1jKyIsInNpemVzIjoiMTIweDEyMCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ=="
     />
     <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
     <style>
@@ -788,6 +788,14 @@
                 <div class="form-row">
                   <input
                     type="text"
+                    class="form-input full-width"
+                    id="newFutureItalianWithPronoun"
+                    placeholder="Italian with pronoun (e.g., Domani io andrò al supermercato)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
                     class="form-input"
                     id="newFutureEnglish"
                     placeholder="English translation (optional)"
@@ -834,6 +842,14 @@
                 <div class="form-row">
                   <input
                     type="text"
+                    class="form-input full-width"
+                    id="newConditionalItalianWithPronoun"
+                    placeholder="Italian with pronoun (e.g., Io vorrei un caffè, per favore)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
                     class="form-input"
                     id="newConditionalEnglish"
                     placeholder="English translation (optional)"
@@ -875,6 +891,14 @@
                     class="form-input full-width"
                     id="newImperfettoItalian"
                     placeholder="Italian sentence (e.g., Quando ero giovane, giocavo a calcio)"
+                  />
+                </div>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    class="form-input full-width"
+                    id="newImperfettoItalianWithPronoun"
+                    placeholder="Italian with pronoun (e.g., Quando io ero giovane, io giocavo a calcio)"
                   />
                 </div>
                 <div class="form-row">
@@ -999,15 +1023,14 @@
           },
           {
             italian: "Pulirò l'appartamento dopo cena",
-            italianWithPronoun: "Io Pulirò l'appartamento dopo cena",
+            italianWithPronoun: "Io pulirò l'appartamento dopo cena",
             english: "I will clean the apartment after dinner",
             infinitive: "pulire",
             conjugation: "io pulirò",
           },
           {
             italian: "La settimana prossima visiterò i miei genitori",
-            italianWithPronoun:
-              "La settimana prossima io visiterò i miei genitori",
+            italianWithPronoun: "La settimana prossima io visiterò i miei genitori",
             english: "Next week I will visit my parents",
             infinitive: "visitare",
             conjugation: "io visiterò",
@@ -1212,8 +1235,7 @@
           },
           {
             italian: "Lavorerebbero di più se fossero pagati meglio",
-            italianWithPronoun:
-              "Loro lavorerebbero di più se fossero pagati meglio",
+            italianWithPronoun: "Loro lavorerebbero di più se fossero pagati meglio",
             english: "They would work more if they were paid better",
             infinitive: "lavorare",
             conjugation: "loro lavorerebbero",
@@ -1278,8 +1300,7 @@
         imperfetto: [
           {
             italian: "Quando ero giovane, giocavo a calcio ogni giorno",
-            italianWithPronoun:
-              "Quando io ero giovane, io giocavo a calcio ogni giorno",
+            italianWithPronoun: "Quando io ero giovane, io giocavo a calcio ogni giorno",
             english: "When I was young, I played soccer every day",
             infinitive: "giocare",
             conjugation: "io giocavo",
@@ -1293,16 +1314,14 @@
           },
           {
             italian: "Mia nonna cucinava sempre la pasta la domenica",
-            italianWithPronoun:
-              "Mia nonna lei cucinava sempre la pasta la domenica",
+            italianWithPronoun: "Mia nonna lei cucinava sempre la pasta la domenica",
             english: "My grandmother always cooked pasta on Sundays",
             infinitive: "cucinare",
             conjugation: "lei cucinava",
           },
           {
             italian: "Da bambini guardavamo la televisione ogni sera",
-            italianWithPronoun:
-              "Noi da bambini guardavamo la televisione ogni sera",
+            italianWithPronoun: "Noi da bambini guardavamo la televisione ogni sera",
             english: "As children we watched television every evening",
             infinitive: "guardare",
             conjugation: "noi guardavamo",
@@ -1330,8 +1349,7 @@
           },
           {
             italian: "Mio padre leggeva il giornale ogni mattina",
-            italianWithPronoun:
-              "Mio padre lui leggeva il giornale ogni mattina",
+            italianWithPronoun: "Mio padre lui leggeva il giornale ogni mattina",
             english: "My father read the newspaper every morning",
             infinitive: "leggere",
             conjugation: "lui leggeva",
@@ -1345,16 +1363,14 @@
           },
           {
             italian: "I bambini giocavano nel parco tutti i giorni",
-            italianWithPronoun:
-              "Loro i bambini giocavano nel parco tutti i giorni",
+            italianWithPronoun: "Loro i bambini giocavano nel parco tutti i giorni",
             english: "The children played in the park every day",
             infinitive: "giocare",
             conjugation: "loro giocavano",
           },
           {
             italian: "Non mangiavo mai verdure quando ero piccolo",
-            italianWithPronoun:
-              "Io non mangiavo mai verdure quando ero piccolo",
+            italianWithPronoun: "Io non mangiavo mai verdure quando ero piccolo",
             english: "I never ate vegetables when I was little",
             infinitive: "mangiare",
             conjugation: "io non mangiavo",
@@ -1396,8 +1412,7 @@
           },
           {
             italian: "Avevo dieci anni quando ho imparato a nuotare",
-            italianWithPronoun:
-              "Io avevo dieci anni quando ho imparato a nuotare",
+            italianWithPronoun: "Io avevo dieci anni quando ho imparato a nuotare",
             english: "I was ten years old when I learned to swim",
             infinitive: "avere",
             conjugation: "io avevo",
@@ -1478,7 +1493,7 @@
           });
       }
 
-      /// Open Italian conjugation page for the infinitive
+      // Open Italian conjugation page for the infinitive
       function openDictionary(sentence) {
         // Find the sentence data to get the infinitive
         const sentenceData = currentSelectedSentences.find(
@@ -1635,7 +1650,6 @@
       }
 
       // Display selected sentences
-      // Display selected sentences
       function displaySelectedSentences(sentences) {
         const container = document.getElementById("selectedSentences");
 
@@ -1749,6 +1763,11 @@
             `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
           )
           .value.trim();
+        const italianWithPronoun = document
+          .getElementById(
+            `new${tense.charAt(0).toUpperCase() + tense.slice(1)}ItalianWithPronoun`
+          )
+          .value.trim();
         const english = document
           .getElementById(
             `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
@@ -1783,6 +1802,7 @@
         // Add the sentence
         const newSentence = {
           italian: italian,
+          italianWithPronoun: italianWithPronoun || italian,
           english: english || null,
           infinitive: infinitive || null,
           conjugation: conjugation || null,
@@ -1794,6 +1814,9 @@
         // Clear form
         document.getElementById(
           `new${tense.charAt(0).toUpperCase() + tense.slice(1)}Italian`
+        ).value = "";
+        document.getElementById(
+          `new${tense.charAt(0).toUpperCase() + tense.slice(1)}ItalianWithPronoun`
         ).value = "";
         document.getElementById(
           `new${tense.charAt(0).toUpperCase() + tense.slice(1)}English`
@@ -1841,6 +1864,11 @@
                           sentence.italian
                         }</div>
                         <div class="sentence-item-details">
+                          ${
+                            sentence.italianWithPronoun && sentence.italianWithPronoun !== sentence.italian
+                              ? `With pronoun: ${sentence.italianWithPronoun} | `
+                              : ""
+                          }
                           ${
                             sentence.english
                               ? `English: ${sentence.english}`
@@ -1993,8 +2021,7 @@
             },
             {
               italian: "La settimana prossima studieremo insieme",
-              italianWithPronoun:
-                "La settimana prossima noi studieremo insieme",
+              italianWithPronoun: "La settimana prossima noi studieremo insieme",
               english: "Next week we will study together",
               infinitive: "studiare",
               conjugation: "noi studieremo",
@@ -2003,14 +2030,14 @@
           conditional: [
             {
               italian: "Vorresti venire con noi?",
-              italianWithPronoun: "Vorresti tu venire con noi?",
+              italianWithPronoun: "Tu vorresti venire con noi?",
               english: "Would you like to come with us?",
               infinitive: "volere",
               conjugation: "tu vorresti",
             },
             {
               italian: "Dovremmo partire presto",
-              italianWithPronoun: "Dovremmo noi partire presto",
+              italianWithPronoun: "Noi dovremmo partire presto",
               english: "We should leave early",
               infinitive: "dovere",
               conjugation: "noi dovremmo",
@@ -2208,7 +2235,7 @@
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register(
-            "data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGV2ZW50LndhaXRVbnRpbChzZWxmLnNraXBXYWl0aW5nKCkpOwp9KTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignYWN0aXZhdGUnLCBldmVudCA9PiB7CiAgZXZlbnQud2FpdFVudGlsKHNlbGYuY2xpZW50cy5jbGFpbSgpKTsKfSk7CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7"
+            "data:application/json;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGV2ZW50LndhaXRVbnRpbChzZWxmLnNraXBXYWl0aW5nKCkpOwp9KTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignYWN0aXZhdGUnLCBldmVudCA9PiB7CiAgZXZlbnQud2FpdFVudGlsKHNlbGYuY2xpZW50cy5jbGFpbSgpKTsKfSk7CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7"
           )
           .then(() => console.log("Service Worker registered"))
           .catch((err) => console.log("Service Worker registration failed"));

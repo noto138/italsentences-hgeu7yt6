@@ -3487,6 +3487,8 @@
       }
 
       // Get random sentences based on user selection
+      // Replace the getRandomSentences function with this improved version
+
       function getRandomSentences() {
         console.log("Getting random sentences...");
         const selectedSentences = [];
@@ -3550,14 +3552,68 @@
           return;
         }
 
-        // Shuffle and select sentences
-        const shuffled = [...availableSentences].sort(
-          () => 0.5 - Math.random()
+        // IMPROVED SHUFFLING: Fisher-Yates shuffle algorithm
+        function fisherYatesShuffle(array) {
+          const shuffled = [...array]; // Create a copy
+          for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+          }
+          return shuffled;
+        }
+
+        // ANTI-REPETITION: Track recently used sentences
+        const recentlyUsedKey = "italianRecentSentences";
+        let recentlyUsed = [];
+
+        try {
+          const stored = localStorage.getItem(recentlyUsedKey);
+          if (stored) {
+            recentlyUsed = JSON.parse(stored);
+          }
+        } catch (e) {
+          console.log("Could not load recently used sentences:", e);
+        }
+
+        // Remove recently used sentences from available pool if we have enough alternatives
+        const maxRecentToRemove = Math.min(
+          recentlyUsed.length,
+          Math.floor(availableSentences.length * 0.3)
         );
+        let filteredSentences = availableSentences;
+
+        if (availableSentences.length - maxRecentToRemove >= sentenceCount) {
+          filteredSentences = availableSentences.filter(
+            (sentence) => !recentlyUsed.includes(sentence.italian)
+          );
+        }
+
+        // If we still don't have enough, use all available sentences
+        if (filteredSentences.length < sentenceCount) {
+          filteredSentences = availableSentences;
+        }
+
+        // Apply proper shuffle
+        const shuffled = fisherYatesShuffle(filteredSentences);
         const selectedCount = Math.min(sentenceCount, shuffled.length);
 
+        // Select sentences
         for (let i = 0; i < selectedCount; i++) {
           selectedSentences.push(shuffled[i]);
+        }
+
+        // Update recently used list
+        const newRecentlyUsed = selectedSentences.map((s) => s.italian);
+        const maxRecentHistory = 20; // Remember last 20 sentences
+        recentlyUsed = [...newRecentlyUsed, ...recentlyUsed].slice(
+          0,
+          maxRecentHistory
+        );
+
+        try {
+          localStorage.setItem(recentlyUsedKey, JSON.stringify(recentlyUsed));
+        } catch (e) {
+          console.log("Could not save recently used sentences:", e);
         }
 
         currentSelectedSentences = selectedSentences;
@@ -3571,8 +3627,11 @@
           hasAnySentences ? "inline-block" : "none";
         document.getElementById("conjugationHintBtn").style.display =
           hasAnySentences ? "inline-block" : "none";
-      }
 
+        console.log(
+          `Selected ${selectedSentences.length} sentences from ${availableSentences.length} available. Recently used: ${recentlyUsed.length}`
+        );
+      }
       // Display selected sentences
       function displaySelectedSentences(sentences) {
         const container = document.getElementById("selectedSentences");
